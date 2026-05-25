@@ -151,14 +151,14 @@ export function Footer() {
                 <span>chci@carsu.edu.ph</span>
               </li>
               <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
-                <Facebook className="h-6 w-6 text-secondary" />
+                <Facebook className="h-6.5 w-6.5/74 text-secondary" />
                 <a
                   href="https://www.facebook.com/csuchci"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="break-words underline-offset-4 hover:underline"
                 >
-                  facebook.com/csuchci
+                  Center for Human Computer Interaction
                 </a>
               </li>
             </ul>
