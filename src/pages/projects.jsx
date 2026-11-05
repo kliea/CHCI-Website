@@ -38,7 +38,7 @@ export function ProjectsSection() {
         </p>
 
         <div className="pt-8">
-          <a href="https://chci.csu.edu.ph" target="_blank" rel="noopener noreferrer">
+          <a href="https://vlrc.vercel.app/projects" target="_blank" rel="noopener noreferrer">
             <Button
               size="lg"
               className="gap-3 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-base px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all"
