@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { ExternalLink } from 'lucide-react'
 
 const CHCI_PROJECTS_URL =
-  'https://www.ccis-research.online/api/projects/by-affiliation?affiliation=CHCI'
+  'https://www.ccis-research.online/api/projects/by-affiliation?affiliation=CHCI%20Researcher'
 const REGISTRY_URL = 'https://www.ccis-research.online/projects'
 
 function formatLeader(researcher) {
@@ -135,7 +135,7 @@ export function ProjectsSection() {
         </div>
 
         <div className="pt-4">
-          <a href={REGISTRY_URL} target="_blank" rel="noopener noreferrer">
+          <a href={CHCI_PROJECTS_URL} target="_blank" rel="noopener noreferrer">
             <Button
               size="lg"
               className="gap-3 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-base px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all"
