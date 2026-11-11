@@ -1,12 +1,30 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
 import { ExternalLink } from 'lucide-react'
 
 const CHCI_PROJECTS_URL =
-  'https://www.ccis-research.online/api/projects/by-affiliation?affiliation=CHCI%20Researcher'
+  'https://www.ccis-research.online/api/projects/by-affiliation?affiliation=CHCI%20Researcher&includeMembers=true'
 const REGISTRY_URL = 'https://www.ccis-research.online/projects'
+
+const STATUS_ORDER = { Ongoing: 0, Completed: 1 }
+
+function projectYear(project) {
+  const source = project.endDate || project.startDate || ''
+  const year = Number(String(source).slice(0, 4))
+  return Number.isFinite(year) ? year : 0
+}
+
+function compareProjects(a, b) {
+  const rankA = STATUS_ORDER[a.status] ?? 2
+  const rankB = STATUS_ORDER[b.status] ?? 2
+  if (rankA !== rankB) return rankA - rankB
+
+  const yearDiff = projectYear(b) - projectYear(a)
+  if (yearDiff !== 0) return yearDiff
+
+  return String(b.endDate || b.startDate || '').localeCompare(String(a.endDate || a.startDate || ''))
+}
 
 function formatLeader(researcher) {
   if (!researcher) return 'CHCI Researcher'
@@ -35,7 +53,8 @@ export function ProjectsSection() {
         if (!response.ok) throw new Error('CHCI projects request failed')
 
         const data = await response.json()
-        setProjects(Array.isArray(data.projects) ? data.projects : [])
+        const projects = Array.isArray(data.projects) ? data.projects : []
+        setProjects([...projects].sort(compareProjects))
         setStatus('ready')
       } catch (error) {
         if (error.name === 'AbortError') return
@@ -76,7 +95,7 @@ export function ProjectsSection() {
         </div>
 
         <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Research projects led by CHCI researchers, listed from the CCIS research registry.
+          Research projects that CHCI researchers lead or join, listed from the CCIS research registry.
         </p>
 
         <div className="w-full text-left">
@@ -132,18 +151,6 @@ export function ProjectsSection() {
               ))}
             </div>
           )}
-        </div>
-
-        <div className="pt-4">
-          <a href={CHCI_PROJECTS_URL} target="_blank" rel="noopener noreferrer">
-            <Button
-              size="lg"
-              className="gap-3 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-base px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all"
-            >
-              Explore Projects
-              <ExternalLink className="h-5 w-5" />
-            </Button>
-          </a>
         </div>
 
         <div className="pt-8 space-y-6">
